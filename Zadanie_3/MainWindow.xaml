@@ -1,0 +1,140 @@
+<Window x:Class="Z3_App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Z3_App"
+        Title="Zadanie 3 – Dane osobowe (INotifyPropertyChanged)"
+        Width="460"
+        SizeToContent="Height"
+        ResizeMode="CanMinimize"
+        Background="#1e1e2e">
+
+    <Window.Resources>
+        <local:DateConverter x:Key="DateConverter"/>
+
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#a6adc8"/>
+            <Setter Property="FontSize"   Value="13"/>
+            <Setter Property="Margin"     Value="0,0,8,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="ValueStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#89b4fa"/>
+            <Setter Property="FontSize"   Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="HeaderStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#cdd6f4"/>
+            <Setter Property="FontSize"   Value="15"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin"     Value="0,0,0,10"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background"      Value="#313244"/>
+            <Setter Property="Foreground"      Value="#cdd6f4"/>
+            <Setter Property="BorderBrush"     Value="#45475a"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Padding"         Value="6,5"/>
+            <Setter Property="FontSize"        Value="13"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#89b4fa"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Margin="20">
+
+        <TextBlock Text="Dane wejściowe" Style="{StaticResource HeaderStyle}"/>
+
+        <Grid Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Podaj imię i nazwisko:"
+                       Style="{StaticResource LabelStyle}"/>
+            <TextBox Grid.Column="1"
+                     Text="{Binding ImieNazwisko, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     ToolTip="np. Jan Mateusz Kowalski"/>
+        </Grid>
+
+        <Grid Margin="0,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Podaj datę urodzenia:"
+                       Style="{StaticResource LabelStyle}"/>
+            <TextBox Grid.Column="1"
+                     Text="{Binding DataUrodzin, Mode=TwoWay, Converter={StaticResource DateConverter}, UpdateSourceTrigger=LostFocus}"
+                     ToolTip="Format: DD.MM.RRRR lub RRRR-MM-DD"/>
+        </Grid>
+
+        <Separator Margin="0,16,0,16" Background="#45475a"/>
+
+        <TextBlock Text="Wyniki (data binding)" Style="{StaticResource HeaderStyle}"/>
+
+        <Grid Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Twoje pierwsze imię:"
+                       Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Column="1" Text="{Binding PierwszeImie}"
+                       Style="{StaticResource ValueStyle}"/>
+        </Grid>
+
+        <Grid Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Twoje nazwisko:"
+                       Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Column="1" Text="{Binding Nazwisko}"
+                       Style="{StaticResource ValueStyle}"/>
+        </Grid>
+
+        <Grid Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Twój wiek:"
+                       Style="{StaticResource LabelStyle}"/>
+            <TextBlock Grid.Column="1" Foreground="#a6e3a1" FontSize="14" FontWeight="Bold">
+                <TextBlock.Text>
+                    <Binding Path="Wiek" StringFormat="{}{0} lat"/>
+                </TextBlock.Text>
+            </TextBlock>
+        </Grid>
+
+        <Grid Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Wszystkie imiona:"
+                       Style="{StaticResource LabelStyle}"/>
+            <ItemsControl Grid.Column="1" ItemsSource="{Binding Imiona}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" Foreground="#cba6f7" FontSize="13" Margin="0,0,6,0"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
+    </StackPanel>
+</Window>
