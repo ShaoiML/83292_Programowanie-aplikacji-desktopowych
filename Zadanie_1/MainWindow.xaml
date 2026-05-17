@@ -5,25 +5,16 @@
         Width="900" Height="620"
         MinWidth="500" MinHeight="400">
 
-    <!--
-        Główny układ: Grid z 3 wierszami
-          Row 0 – górna belka (poziomy ScrollViewer)
-          Row 1 – separator (Gap)
-          Row 2 – dolna część: lewy panel + separator + główny obszar
-    -->
+    
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <!-- górna belka – stała wysokość -->
             <RowDefinition Height="80"/>
-            <!-- przerwa 8px -->
             <RowDefinition Height="8"/>
-            <!-- reszta okna -->
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- ═══════════════════════════════════════════════════
-             ROW 0 – Górna belka: poziomo przewijana
-             ═══════════════════════════════════════════════════ -->
+
         <Border Grid.Row="0"
                 BorderBrush="#313244" BorderThickness="2"
                 CornerRadius="6" Background="#1e1e2e">
@@ -32,7 +23,7 @@
                 <StackPanel Orientation="Horizontal"
                             Margin="8,0" VerticalAlignment="Center">
 
-                    <!-- 12 kolorowych boxów -->
+  
                     <Border Width="110" Height="52" Margin="0,0,8,0" CornerRadius="4"
                             Background="#e74c3c" BorderBrush="#c0392b" BorderThickness="2"/>
                     <Border Width="110" Height="52" Margin="0,0,8,0" CornerRadius="4"
@@ -62,20 +53,15 @@
             </ScrollViewer>
         </Border>
 
-        <!-- ═══════════════════════════════════════════════════
-             ROW 2 – dolna część: lewy panel + główny obszar
-             ═══════════════════════════════════════════════════ -->
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <!-- lewy panel – stała szerokość -->
                 <ColumnDefinition Width="155"/>
-                <!-- przerwa 8px -->
                 <ColumnDefinition Width="8"/>
-                <!-- główny obszar -->
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- ── Lewy panel: pionowo przewijany ── -->
+        
             <Border Grid.Column="0"
                     BorderBrush="#313244" BorderThickness="2"
                     CornerRadius="6" Background="#1e1e2e">
@@ -84,7 +70,6 @@
                     <StackPanel Orientation="Vertical"
                                 Margin="8" HorizontalAlignment="Stretch">
 
-                        <!-- 12 kolorowych boxów pionowo -->
                         <Border Height="55" Margin="0,0,0,8" CornerRadius="4"
                                 Background="#c0392b" BorderBrush="#96281b" BorderThickness="2"/>
                         <Border Height="55" Margin="0,0,0,8" CornerRadius="4"
@@ -114,13 +99,11 @@
                 </ScrollViewer>
             </Border>
 
-            <!-- ── Główny obszar: pusty ScrollViewer ── -->
             <Border Grid.Column="2"
                     BorderBrush="#313244" BorderThickness="2"
                     CornerRadius="6" Background="#181825">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto"
                               VerticalScrollBarVisibility="Auto">
-                    <!-- pusta przestrzeń – tu można wstawiać zawartość -->
                     <Grid/>
                 </ScrollViewer>
             </Border>
