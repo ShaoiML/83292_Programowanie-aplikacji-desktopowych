@@ -1,0 +1,8 @@
+Projekt wymaga .NET 10 SDK.
+Pobierz ze strony: https://dotnet.microsoft.com/download
+
+Uruchomienie każdego zadania:
+dotnet run --project Zadanie_1
+dotnet run --project Zadanie_2
+dotnet run --project Zadanie_3
+dotnet run --project Zadanie_4
