@@ -8,8 +8,6 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
 
-        // Ustawienie DataContext – wszystkie Binding w XAML będą szukać
-        // właściwości właśnie w tym obiekcie
         DataContext = new OsobaModel();
     }
 }
