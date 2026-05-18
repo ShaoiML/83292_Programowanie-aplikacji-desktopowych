@@ -8,12 +8,6 @@
 
     <Window.Resources>
 
-        <!-- ═══════════════════════════════════════════════════════════════
-             B – WZORZEC (ControlTemplate) przycisków
-             Niebieski, obramowanie 5px, margines 3px
-             Hover  → jasne tło + tekst w kolorze bordera
-             Pressed→ ciemniejszy odcień
-             ═══════════════════════════════════════════════════════════════ -->
         <Style x:Key="ButtonTemplate" TargetType="Button">
             <Setter Property="Background"   Value="#4a90d9"/>
             <Setter Property="Foreground"   Value="White"/>
@@ -39,14 +33,14 @@
                                               TextElement.Foreground="{TemplateBinding Foreground}"/>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <!-- Hover -->
+                         
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border"   Property="Background"   Value="#d4e8ff"/>
                                 <Setter TargetName="border"   Property="BorderBrush"  Value="#1a5fa8"/>
-                                <!-- kolor tekstu zgodny z borderem -->
+                            
                                 <Setter TargetName="content"  Property="TextElement.Foreground" Value="#1a5fa8"/>
                             </Trigger>
-                            <!-- Pressed -->
+                        
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border"   Property="Background"   Value="#a0c8f0"/>
                                 <Setter TargetName="border"   Property="BorderBrush"  Value="#1a5fa8"/>
@@ -58,11 +52,7 @@
             </Setter>
         </Style>
 
-        <!-- ═══════════════════════════════════════════════════════════════
-             B☆ – STYL ALTERNATYWNY identyfikowany kluczem "ButtonAlt"
-             Pomarańczowy – pojawia się w każdej belce
-             Dziedziczy Template z ButtonTemplate
-             ═══════════════════════════════════════════════════════════════ -->
+
         <Style x:Key="ButtonAlt" TargetType="Button"
                BasedOn="{StaticResource ButtonTemplate}">
             <Setter Property="Background"  Value="#e67e22"/>
@@ -101,12 +91,7 @@
 
     </Window.Resources>
 
-    <!-- ═══════════════════════════════════════════════════════════════════
-         GŁÓWNA SIATKA
-         Row 0 – górna belka
-         Row 1 – przerwa
-         Row 2 – sub-siatka (lewa belka + przestrzeń + dolna belka)
-         ═══════════════════════════════════════════════════════════════════ -->
+
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -114,21 +99,20 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- ── GÓRNA BELKA ── -->
         <Border Grid.Row="0"
                 Background="#2a2a3e" BorderBrush="#313244"
                 BorderThickness="2" CornerRadius="6" Padding="4">
             <StackPanel Orientation="Horizontal">
-                <!-- B – przyciski z wzorcem -->
+
                 <Button Content="Top B 1" Style="{StaticResource ButtonTemplate}"/>
                 <Button Content="Top B 2" Style="{StaticResource ButtonTemplate}"/>
                 <Button Content="Top B 3" Style="{StaticResource ButtonTemplate}"/>
-                <!-- B☆ – styl alternatywny przez klucz -->
+
                 <Button Content="Top B☆"  Style="{StaticResource ButtonAlt}"/>
             </StackPanel>
         </Border>
 
-        <!-- ── SUB-SIATKA ── -->
+
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="160"/>
@@ -141,14 +125,12 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- ── LEWA BELKA (sub-siatka, col 0, rows 0+2) ──
-                 B* – styl zdefiniowany w zasobach sub-siatki (zielony)
-                 Każdy przycisk w tej belce dostaje styl z Resources tej Border -->
+
             <Border Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"
                     Background="#1e3b2f" BorderBrush="#27ae60"
                     BorderThickness="2" CornerRadius="6">
                 <Border.Resources>
-                    <!-- B* – styl sub-siatki dziedziczący template, zielone tło -->
+
                     <Style x:Key="ButtonSub" TargetType="Button"
                            BasedOn="{StaticResource ButtonTemplate}">
                         <Setter Property="Background"  Value="#27ae60"/>
@@ -189,26 +171,26 @@
                     <Button Content="Left B*1" Style="{StaticResource ButtonSub}"/>
                     <Button Content="Left B*2" Style="{StaticResource ButtonSub}"/>
                     <Button Content="Left B*3" Style="{StaticResource ButtonSub}"/>
-                    <!-- B☆ w lewej belce -->
+                    
                     <Button Content="Left B☆"  Style="{StaticResource ButtonAlt}"/>
                 </StackPanel>
             </Border>
 
-            <!-- ── PRZESTRZEŃ NA ZAWARTOŚĆ (col 2, row 0) ── -->
+
             <Border Grid.Column="2" Grid.Row="0"
                     Background="#181825" BorderBrush="#313244"
                     BorderThickness="2" CornerRadius="6">
-                <!-- pusta komórka siatki – miejsce na zawartość -->
+
             </Border>
 
-            <!-- ── DOLNA BELKA (col 2, row 2) ── -->
+
             <Border Grid.Column="2" Grid.Row="2"
                     Background="#2a2a3e" BorderBrush="#313244"
                     BorderThickness="2" CornerRadius="6" Padding="4">
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Bot B*1" Style="{StaticResource ButtonTemplate}"/>
                     <Button Content="Bot B*2" Style="{StaticResource ButtonTemplate}"/>
-                    <!-- B☆ w dolnej belce -->
+
                     <Button Content="Bot B☆"  Style="{StaticResource ButtonAlt}"/>
                 </StackPanel>
             </Border>
