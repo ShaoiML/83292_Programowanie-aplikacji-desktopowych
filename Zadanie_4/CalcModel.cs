@@ -3,33 +3,18 @@ using System.Runtime.CompilerServices;
 
 namespace Z4_App;
 
-/// <summary>
-/// Model kalkulatora z buforem.
-///
-/// Bufor:
-///   _left     – lewy argument (ostatni wynik lub pierwsza wpisana liczba)
-///   _right    – prawy argument (ostatnio wpisana liczba – zapamiętana)
-///   _op       – zapamiętana operacja binarna
-///   _newInput – czy użytkownik zaczął wpisywać nową liczbę
-///
-/// Zasada bufora:
-///   = bez nowych danych → użyj _right z poprzedniego razu
-///   C → zeruje WSZYSTKIE bufory
-/// </summary>
 public class CalcModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;
     private void Notify([CallerMemberName] string? n = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(n));
 
-    // ── Pola bufora ───────────────────────────────────────────────────────────
     private double? _left     = null;
     private double? _right    = null;
     private string? _op       = null;
     private bool    _newInput = true;
     private bool    _error    = false;
 
-    // ── Właściwości bindowane do XAML ─────────────────────────────────────────
     private string _display   = "0";
     private string _opDisplay = string.Empty;
 
@@ -39,16 +24,13 @@ public class CalcModel : INotifyPropertyChanged
         private set { _display = value; Notify(); }
     }
 
-    /// Wyświetla aktualną operację i lewy argument nad wyświetlaczem
     public string OpDisplay
     {
         get => _opDisplay;
         private set { _opDisplay = value; Notify(); }
     }
 
-    // ═════════════════════════════════════════════════════════════════════════
-    //  Wpisywanie cyfr i znaku dziesiętnego
-    // ═════════════════════════════════════════════════════════════════════════
+
     public void Digit(string ch)
     {
         if (_error) return;
@@ -77,14 +59,11 @@ public class CalcModel : INotifyPropertyChanged
         Display = Display.Length > 1 ? Display[..^1] : "0";
     }
 
-    // ═════════════════════════════════════════════════════════════════════════
-    //  Wybór operacji binarnej (+, -, *, /, %+, %-, %*, %/, x^y)
-    // ═════════════════════════════════════════════════════════════════════════
     public void SetOp(string op)
     {
         if (_error || !double.TryParse(Display, out double val)) return;
 
-        // jeśli mamy już op i użytkownik wpisał nową liczbę → pośredni wynik
+
         if (_op is not null && !_newInput)
         {
             _right = val;
@@ -100,18 +79,16 @@ public class CalcModel : INotifyPropertyChanged
         OpDisplay = $"{Format(_left ?? 0)}  {op}";
     }
 
-    // ═════════════════════════════════════════════════════════════════════════
-    //  Wykonanie (=)
-    // ═════════════════════════════════════════════════════════════════════════
+
     public void Equals()
     {
         if (_error || _op is null) return;
         if (!double.TryParse(Display, out double val)) return;
 
-        // jeśli użytkownik NIE wpisał nowych danych → użyj poprzedniego _right
+      
         if (!_newInput)
             _right = val;
-        // jeśli _newInput == true → _right już zapamiętany z poprzedniego razu
+     
 
         ExecuteBinary();
         _newInput = true;
@@ -154,9 +131,6 @@ public class CalcModel : INotifyPropertyChanged
         }
     }
 
-    // ═════════════════════════════════════════════════════════════════════════
-    //  Operacje jednoargumentowe (√, 1/x, x²)
-    // ═════════════════════════════════════════════════════════════════════════
     public void Unary(string op)
     {
         if (_error || !double.TryParse(Display, out double val)) return;
@@ -191,9 +165,6 @@ public class CalcModel : INotifyPropertyChanged
         }
     }
 
-    // ═════════════════════════════════════════════════════════════════════════
-    //  Reset – zeruje WSZYSTKIE bufory
-    // ═════════════════════════════════════════════════════════════════════════
     public void Reset()
     {
         _left     = null;

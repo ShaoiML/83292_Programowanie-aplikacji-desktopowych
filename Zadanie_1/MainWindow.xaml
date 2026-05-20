@@ -8,7 +8,6 @@
     
     <Grid Margin="8">
         <Grid.RowDefinitions>
-            <!-- górna belka – stała wysokość -->
             <RowDefinition Height="80"/>
             <RowDefinition Height="8"/>
             <RowDefinition Height="*"/>
